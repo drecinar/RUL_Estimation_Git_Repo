@@ -7,8 +7,9 @@ The entire dataset and its description can be also found and downloaded from her
 It is the fourth dataset on the web site.
 
 ## Python Files
-1) utils.py: includes the helper function that is used in run_data.py
-2) run_data.py reads the 2nd_Test directory raw data and performs the following operations: 
+1. utils.py: includes the helper function that is used in run_data.py.
+2. run_data.py: reads the 2nd_Test directory raw data and performs the following operations.
+
 It follows the algorithm from Ahmad et al. 2017 paper which is also included in this repo. Instead of Linear Rectification, I chose to utilize Gaussian smoothing. 
 The rest of the algo code follows the procedures described in the paper. 
 Also as a supporting evidence to compare the results, the authors second paper (also included in this repo) is chosen. In this paper (file name: Ahmad_Second_Paper.pdf)in Fig 2,
