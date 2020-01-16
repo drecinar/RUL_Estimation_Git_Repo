@@ -1,5 +1,4 @@
 from utils import *
-import matplotlib.pyplot as plt
 
 if __name__ == "__main__":
     rms_df = prepare_data()
@@ -7,10 +6,15 @@ if __name__ == "__main__":
     apply_gaussian1d_filter(rms_df, 'rmsB1', sigma=50)
 
     rms_df['sample_indx'] = rms_df.index
+
+    # number of samples to be taken for the sliding window, might change post TSP according to the paper
+    # thus two variables
     n = 50
     n_post_tsp = 50
 
+    # the slopes aka gradients of the fits according to the reference paper
     tsp_threshold = 0.0001
+    failure_threshold = 0.0005
 
     last_window = 0
 
@@ -45,7 +49,7 @@ if __name__ == "__main__":
         slope = apply_linear_regr(rms_df.sample_indx[postTSPCount: postTSPCount + n_post_tsp],
                                   poly_fit(rms_df.sample_indx[postTSPCount: postTSPCount + n_post_tsp]))
 
-        if slope >= 0.0005:
+        if slope >= failure_threshold:
             print("slope for the quad fit starting at index {0} is {1}".format(postTSPCount, slope))
             print('Threshold detected ...')
             print('k value {}'.format(k_sum))
