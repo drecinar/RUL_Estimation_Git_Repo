@@ -44,13 +44,16 @@ def lrt_apply(data_window, prev_window_sample):
 
 def plot_rms_vals(rms_df, columnName='rmsB1'):
     # individual RMS value
-    plt.figure(figsize=(10, 5))
-    plt.plot(rms_df.date_time_format[:-2], rms_df[columnName][:-2], label="B1", c="maroon")
+    fig = plt.figure(figsize=(10, 5))
+    plt.plot(rms_df.date_time_format[:-2], rms_df[columnName][:-2], label= columnName, c="maroon")
     plt.legend(loc='upper left')
     plt.xlabel('Time')
     plt.ylabel(columnName)
+    plt.grid(True)
     plt.show()
-    # pylab.savefig("B1rms.png")
+    figpath = "Results_Folder/" + columnName + '.png'
+    fig.savefig(figpath)
+    plt.close()
 
 
 def prepare_data():

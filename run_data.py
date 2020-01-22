@@ -3,6 +3,13 @@ from utils import *
 if __name__ == "__main__":
     rms_df = prepare_data()
 
+    # plot the raw RMS bearing data and save the fig into the results folder
+    plot_rms_vals(rms_df, columnName= 'rmsB1')
+    plot_rms_vals(rms_df, columnName= 'rmsB2')
+    plot_rms_vals(rms_df, columnName= 'rmsB3')
+    plot_rms_vals(rms_df, columnName= 'rmsB4')
+
+
     apply_gaussian1d_filter(rms_df, 'rmsB1', sigma=50)
 
     rms_df['sample_indx'] = rms_df.index
