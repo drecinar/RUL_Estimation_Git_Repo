@@ -167,7 +167,10 @@ def plt_calc_rul_fig(rms_df, last_window, k_sum, n_post_tsp, postTSPCount, poly_
     plt.figure(figsize=(10, 5))
 
     plt.plot(rms_df.sample_indx[0:last_window], rms_df[rmsSourceCol][0:last_window],
-                 c='maroon', label='RMS values before TSP')
+                 c='green', label='RMS values before TSP')
+
+    plt.plot(rms_df.sample_indx[last_window: -1], rms_df[rmsSourceCol][last_window : -1],
+             c='maroon', label='RMS values after TSP')
 
     plt.plot(rms_df.sample_indx[last_window: last_window + k_sum], pred_rms_vals,
              c='blue', linestyle='dashed', lw=2, label='Estimated RMS Trend')
