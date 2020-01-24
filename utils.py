@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from scipy.ndimage import gaussian_filter1d
 from scipy.stats import linregress
+from scipy.stats import kurtosis, skew
 
 
 
@@ -50,9 +51,10 @@ def plot_rms_vals(rms_df, columnName='rmsB1'):
     plt.xlabel('Time')
     plt.ylabel(columnName)
     plt.grid(True)
-    plt.show()
+    plt.show(block=False)
     figpath = "Results_Folder/" + columnName + '.png'
     fig.savefig(figpath)
+    plt.pause(3)
     plt.close()
 
 
@@ -78,6 +80,26 @@ def prepare_data():
             rmsB3 = np.sqrt(np.mean(df.B3 ** 2))
             rmsB4 = np.sqrt(np.mean(df.B4 ** 2))
 
+            kurtosis1 = kurtosis(df.B1)
+            kurtosis2 = kurtosis(df.B2)
+            kurtosis3 = kurtosis(df.B3)
+            kurtosis4 = kurtosis(df.B4)
+
+            stdn1 = np.sqrt(np.sum((np.array(df.B1) - np.mean(df.B1)) ** 2) / (len(df.B1) - 1))
+            stdn2 = np.sqrt(np.sum((np.array(df.B2) - np.mean(df.B2)) ** 2) / (len(df.B2) - 1))
+            stdn3 = np.sqrt(np.sum((np.array(df.B3) - np.mean(df.B3)) ** 2) / (len(df.B3) - 1))
+            stdn4 = np.sqrt(np.sum((np.array(df.B4) - np.mean(df.B4)) ** 2) / (len(df.B4) - 1))
+
+            mean1 = np.mean(df.B1)
+            mean2 = np.mean(df.B2)
+            mean3 = np.mean(df.B3)
+            mean4 = np.mean(df.B4)
+
+            skew1 = skew(df.B1)
+            skew2 = skew(df.B2)
+            skew3 = skew(df.B3)
+            skew4 = skew(df.B4)
+
             dateString = all_path[0][2][i]
             str_dt = dateString[:10].replace(".", "-") + " " + dateString[11:].replace(".", ":")
 
@@ -85,14 +107,16 @@ def prepare_data():
 
             timestamp = int(time.mktime(datetime_object.timetuple()))
 
-            data = {"rmsB1": rmsB1, "rmsB2": rmsB2, "rmsB3": rmsB3, "rmsB4": rmsB4,
-                    "time": datetime_object.time(), "date_time_format": datetime_object,
-                    "day": datetime_object.date().day,
-                    "hour": datetime_object.time().hour, "date_time": timestamp,
-                    "date": datetime_object.date(),
-                    "year": datetime_object.date().year, "month": datetime_object.date().month,
-                    "day": datetime_object.date().day, "hour": datetime_object.time().hour,
-                    "minute": datetime_object.time().minute, "second": datetime_object.time().second}
+            data = {"rmsB1": rmsB1, "rmsB2":rmsB2, "rmsB3":rmsB3, "rmsB4":rmsB4,
+                    "time": datetime_object.time(), "date_time_format" : datetime_object, "day":datetime_object.date().day,
+                    "hour":datetime_object.time().hour, "date_time": timestamp,
+                    "date":datetime_object.date(),"kurtosis1": kurtosis1, "kurtosis2": kurtosis2,
+                    "kurtosis3":kurtosis3, "kurtosis4":kurtosis4,"skew1":skew1, "skew2":skew2,
+                     "skew3":skew3, "skew4":skew4, "stdn1":stdn1, "stdn2": stdn2, "stdn3":stdn3,
+                    "stdn4":stdn4, "mean1":mean1, "mean2":mean2, "mean3":mean3, "mean4":mean4,
+                    "year":datetime_object.date().year,"month":datetime_object.date().month,
+                    "day":datetime_object.date().day,"hour":datetime_object.time().hour,
+                     "minute":datetime_object.time().minute,"second":datetime_object.time().second}
 
             rms_list_all_events.append(data)
 
@@ -193,7 +217,9 @@ def plt_calc_rul_fig(rms_df, last_window, k_sum, n_post_tsp, postTSPCount, poly_
     plt.xticks(range(0, rms_df.shape[0], 50))
     plt.xlabel('Sample #')
     plt.ylabel('RMS Values')
-    plt.show()
+    plt.show(block= False)
+    plt.pause(3)
+    plt.close()
 
     return k_sum * 10
 

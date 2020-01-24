@@ -9,6 +9,17 @@ if __name__ == "__main__":
     plot_rms_vals(rms_df, columnName= 'rmsB3')
     plot_rms_vals(rms_df, columnName= 'rmsB4')
 
+    # plot kurtosis
+    plot_rms_vals(rms_df, columnName= 'kurtosis1')
+    # plot the skew
+    plot_rms_vals(rms_df, columnName= 'skew1')
+
+    #plot the stdn1
+    plot_rms_vals(rms_df, columnName='stdn1')
+
+    plot_rms_vals(rms_df, columnName='mean1')
+
+
 
     apply_gaussian1d_filter(rms_df, 'rmsB1', sigma=50)
 
